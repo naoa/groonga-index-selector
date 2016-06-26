@@ -89,7 +89,7 @@ module Groonga
             node
           end
         when ExpressionTree::IndexColumn
-          index_column_name = node.index_column.name.split('.').last
+          index_column_name = node.object.name.split('.').last
           optimized_index = context["#{@optimized_lexicon.name}.#{index_column_name}"]
           if optimized_index
             ExpressionTree::IndexColumn.new(optimized_index)
@@ -97,7 +97,7 @@ module Groonga
             node
           end
         when ExpressionTree::Accessor
-          accessor = node.value
+          accessor = node.object
           original_source_ids = accessor.object.source_ids
           optimized_accessor = @optimized_lexicon.find_column("#{accessor.name}")
           @expression.take_object(optimized_accessor)
