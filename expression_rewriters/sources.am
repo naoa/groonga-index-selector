@@ -1,0 +1,2 @@
+expression_rewriters =				\
+	index_selector.rb
