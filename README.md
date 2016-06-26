@@ -6,7 +6,7 @@ config``index-selector.table``に設定されたテーブルのキーで検索�
 
 ## Install
 
-Install libgroonga-dev.
+Install Groonga using --enable-mruby option
 
 Build this function.
 
