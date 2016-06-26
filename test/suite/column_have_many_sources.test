@@ -23,7 +23,7 @@ load --table white_words
 ]
 
 table_create Terms TABLE_PAT_KEY ShortText --default_tokenizer TokenBigram
-column_create Terms index COLUMN_INDEX|WITH_POSITION Entries title,body
+column_create Terms index COLUMN_INDEX|WITH_POSITION|WITH_SECTION Entries title,body
 
 load --table Entries
 [
