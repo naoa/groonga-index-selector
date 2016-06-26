@@ -4,8 +4,6 @@ module Groonga
       register "index_selector"
 
       def rewrite
-        p "start expression"
-        p @expression
         optimized_lexicon_name = Config["index-selector.table"]
         return @expression unless optimized_lexicon_name
 
@@ -16,15 +14,9 @@ module Groonga
 
         @optimized_lexicon = context[optimized_lexicon_name]
 
-        p "original root"
-        p root_node
         optimized_root_node = optimize_node(table, root_node)
-        p "optimized root"
-        p optimized_root_node
         rewritten = Expression.create(table)
         optimized_root_node.build(rewritten)
-        p "finish rewritten expression"
-        p rewritten
         rewritten
       end
 
