@@ -6,8 +6,10 @@ module Groonga
       def rewrite
         optimized_lexicon_name = Config["index-selector.table"]
         return @expression unless optimized_lexicon_name
+        return @expression if check_unsupported_code
 
         builder = ExpressionTreeBuilder.new(@expression)
+
         root_node = builder.build
         variable = @expression[0]
         table = context[variable.domain]
@@ -21,6 +23,22 @@ module Groonga
       end
 
       private
+      def check_unsupported_code
+        unsupported = false
+        stack = []
+        codes = @expression.codes
+        codes.each do |code|
+          case code.op
+          when Operator::PUSH
+            case code.value
+            when PatriciaTrie
+              unsupported = true
+            end
+          end
+        end
+        unsupported
+      end
+
       def optimize_node(table, node)
         case node
         when ExpressionTree::LogicalOperation
