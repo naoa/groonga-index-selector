@@ -31,7 +31,7 @@ module Groonga
           case code.op
           when Operator::PUSH
             case code.value
-            when PatriciaTrie
+            when PatriciaTrie, VariableSizeColumn
               unsupported = true
             end
           end
