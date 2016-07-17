@@ -125,6 +125,11 @@ module Groonga
           end
           ExpressionTree::LogicalOperation.new(node.operator,
                                                optimized_sub_nodes)
+        when ExpressionTree::FunctionCall
+          optimized_arguments = node.arguments.map do |argument|
+            optimize_match_column_node table, argument
+          end
+          ExpressionTree::FunctionCall.new(node.procedure, optimized_arguments)
         else
           node
         end
