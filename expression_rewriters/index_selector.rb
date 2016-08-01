@@ -29,7 +29,7 @@ module Groonga
         codes = @expression.codes
         codes.each do |code|
           case code.op
-          when Operator::PREFIX
+          when Operator::PREFIX, Operator::NEAR, Operator::SIMILAR
             unsupported = true
           when Operator::PUSH
             case code.value
@@ -86,7 +86,10 @@ module Groonga
       def optimize_match_column_node table, node
         case node
         when ExpressionTree::BinaryOperation
-          node
+          optimized_left = optimize_match_column_node(table, node.left)
+          ExpressionTree::BinaryOperation.new(node.operator,
+                                              optimized_left,
+                                              node.right)
         when ExpressionTree::Variable
           optimized_index = nil
           node.column.indexes.each do |info|
