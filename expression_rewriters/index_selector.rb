@@ -5,8 +5,8 @@ module Groonga
 
       def rewrite
         optimized_lexicon_name = Config["index-selector.table"]
-        return @expression unless optimized_lexicon_name
-        return @expression if check_unsupported_code
+        return nil unless optimized_lexicon_name
+        return nil if check_unsupported_code
 
         builder = ExpressionTreeBuilder.new(@expression)
 
