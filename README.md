@@ -2,7 +2,7 @@
 
 config``index-selector.table``に設定されたテーブルのキーで検索された場合、そのテーブルにある同名のインデックスを使うようにexpressionを書き換えます。
 
-例えば、https://github.com/naoa/groonga-tokenizer-white を使って、特定のワードのみのWITH_POSITIONなしのインデックスを作ることによりそのワードの検索を高速化することを目的にしてます。
+例えば、https://github.com/naoa/groonga-token-filter-yatof のTokenFilterWhite を使って、特定のワードのみのWITH_POSITIONなしのインデックスを作ることによりそのワードの検索を高速化することを目的にしてます。
 
 ## Install
 
