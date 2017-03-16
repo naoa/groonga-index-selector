@@ -9,6 +9,7 @@ module Groonga
         return nil if check_unsupported_code
 
         builder = ExpressionTreeBuilder.new(@expression)
+        @new_allocated_objs = []
 
         root_node = builder.build
         variable = @expression[0]
@@ -19,6 +20,9 @@ module Groonga
         optimized_root_node = optimize_node(table, root_node)
         rewritten = Expression.create(table)
         optimized_root_node.build(rewritten)
+        @new_allocated_objs.each do |obj|
+          rewritten.take_object(obj)
+        end
         rewritten
       end
 
@@ -115,7 +119,7 @@ module Groonga
           accessor = node.object
           original_source_ids = accessor.object.source_ids
           optimized_accessor = @optimized_lexicon.find_column("#{accessor.name}")
-          @expression.take_object(optimized_accessor)
+          @new_allocated_objs.push(optimized_accessor)
           new_source_ids = optimized_accessor.object.source_ids
           if original_source_ids == new_source_ids
             ExpressionTree::Accessor.new(optimized_accessor)
