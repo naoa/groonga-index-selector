@@ -13,7 +13,8 @@ module Groonga
 
         root_node = builder.build
         variable = @expression[0]
-        table = context[variable.domain]
+        domain_id = variable.domain_id rescue variable.domain
+        table = context[variable.domain_id]
 
         @optimized_lexicon = context[optimized_lexicon_name]
 
